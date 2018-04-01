@@ -1,5 +1,5 @@
-Nm = ['','один','два','три','чотири',"п'ять",'шість','сім','вісім',"дев'ять",'десять']
-Nf = ['','одна','дві','три','чотири',"п'ять",'шість','сім','вісім',"дев'ять",'десять']
+Nm = ['','один','два','три','чотири',"п'ять",'шість','сім','вісім',"дев'ять",'десять'] # masculin
+Nf = ['','одна','дві','три','чотири',"п'ять",'шість','сім','вісім',"дев'ять",'десять'] # feminim
 Nt = ['десять','одинадцять','двонадцять','тринадцять','чотирнадцять',"п'ятнадацять",'шістнадцять','сімнадцять','вісімнадацять',"дев'ятнадацять",'двадцять']
 NN = ['','десять','двадцять','тридцять','сорок',"п'ятьдесят",'шістьдесят','сімдесят','вісімдесят',"дев'яносто",'сто']
 NNN = ['','сто','двісті','триста','чотириста',"п'ятьсот",'шістьсот','сімсот','вісімсот',"дев'ятьсот",'тисяча']
@@ -25,6 +25,7 @@ import math
 
 # making word string 
 def num_in_words_UAH (num_e):
+    "Creating string for UAH between 0 and 999"
     word = ""
     if num_e < 10:
         word = Nf[num_e] + t + UAH[num_e]
@@ -97,6 +98,7 @@ def num_in_words_MRD (num_e):
     return (word)
 
 def num_in_words (sum):
+    'Creating string in words'
     number = sum
     num_i = int(number)
     
@@ -107,34 +109,38 @@ def num_in_words (sum):
     DIG = ['UAH','THO','MLN','MRD']
     RES = []
   
-    # separating fraction part
+    # separating fraction part for kop
     if (round (number - num_i,2)*100) ==0: 
         num_f = '00'
     else:
         num_f = str(int((round ((number - num_i)*100,0))))
     num_kop = ' '+str(num_f) + ' коп.'
 
-    if NUM[0] == 0:
+    if NUM[0] == 0: # creating string for UAH from 0 to 999
         RES.append("")
     else:
         RES.append(num_in_words_UAH(NUM[0]))
 
-    if NUM[1] == 0:
+    if NUM[1] == 0: # creating string for thousands
         RES.append("")
     else:
         RES.append(num_in_words_THO(NUM[1]))
 
-    if NUM[2] == 0:
+    if NUM[2] == 0: # creating string for millions
         RES.append("")
     else:
         RES.append(num_in_words_MLN(NUM[2]))
 
-    if NUM[3] == 0:
+    if NUM[3] == 0: # creating string for billions
         RES.append("")
     else:
         RES.append(num_in_words_MRD(NUM[3]))
 
 
     result = RES[3] + " " + RES[2] + " " + RES[1] + " " + RES[0] + " " + num_kop
-    result =  result.replace("  "," ")
+    result =  result.replace("  "," ") # removing double space
     return result
+
+"""Testing strings"""
+n = float (input   ('введите число: '))
+print  (num_in_words (n))
